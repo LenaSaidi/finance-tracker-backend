@@ -1,5 +1,6 @@
 package com.dauphine.finance.exceptions;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -30,6 +31,12 @@ public class GlobalExceptionHandler {
     })
     public ResponseEntity<ApiError> handleBadRequest(Exception ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiError(ex.getMessage()));
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ApiError> handleIntegrityViolation(DataIntegrityViolationException ex) {
+        String message = "Category cannot be deleted because it is used by existing transactions";
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiError(message));
     }
 }
 
