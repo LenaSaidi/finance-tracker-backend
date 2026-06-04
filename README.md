@@ -37,4 +37,3 @@ Notes:
 
 - JPA schema generation is disabled (validate)
 - SQL init runs on startup
-- Add amount endpoint: PATCH /v1/goals/{id}/amount
